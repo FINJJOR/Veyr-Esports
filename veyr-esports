@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' https:; img-src 'self' https: data:; frame-ancestors 'none';">
+    <meta http-equiv="X-Frame-Options" content="DENY">
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    
+    <title>Veyr Esports | Premier Rocket League Organization</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            magenta: '#FF0055',
+                            dark: '#050507',
+                            card: '#0A0A0F',
+                            border: '#1F1F2E'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Rajdhani', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Rajdhani:wght@600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #050507;
+            color: #E2E8F0;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+        }
+        .font-display {
+            font-family: 'Rajdhani', sans-serif;
+        }
+        .grid-bg {
+            background-size: 40px 40px;
+            background-image: 
+                linear-gradient(to right, rgba(255, 0, 85, 0.04) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 0, 85, 0.04) 1px, transparent 1px);
+        }
+        .magenta-glow {
+            box-shadow: 0 0 25px rgba(255, 0, 85, 0.35);
+        }
+        .text-glow {
+            text-shadow: 0 0 12px rgba(255, 0, 85, 0.6);
+        }
+        /* Frameless Logo Blending */
+        .clean-logo {
+            mix-blend-mode: screen;
+            filter: brightness(1.1) contrast(1.15) drop-shadow(0 0 16px rgba(255, 0, 85, 0.75));
+        }
+    </style>
+</head>
+<body class="grid-bg min-h-screen flex flex-col justify-between selection:bg-brand-magenta selection:text-white">
+
+    <!-- COOKIE CONSENT BANNER -->
+    <div id="cookieBanner" class="fixed bottom-0 inset-x-0 z-50 p-4 bg-brand-card/95 border-t border-brand-border backdrop-blur-md hidden">
+        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-gray-300">
+            <p>We use essential local cookies to enhance your experience and secure your session on our site.</p>
+            <div class="flex items-center gap-3 shrink-0">
+                <button onclick="acceptCookies()" class="bg-brand-magenta text-white px-4 py-2 rounded-lg font-bold uppercase tracking-wider text-[11px] magenta-glow hover:bg-opacity-90 transition-all">Accept</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- NAVIGATION HEADER -->
+    <header class="sticky top-0 z-40 bg-black/80 backdrop-blur-md border-b border-brand-border/60">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <!-- Brand Logo & Name -->
+                <a href="#" class="flex items-center gap-3 group">
+                    <img src="https://shared1.ad-lister.co.uk/UserImages/db655523-361b-4233-aa4d-1b375844f4c6/Img/clearance/Finley-URL_1.jpg" 
+                         alt="Veyr Esports Logo" 
+                         class="h-10 w-auto clean-logo transition-transform duration-300 group-hover:scale-105">
+                    <span class="font-display text-2xl font-extrabold tracking-wider text-white uppercase group-hover:text-brand-magenta transition-colors">
+                        Veyr <span class="text-brand-magenta">Esports</span>
+                    </span>
+                </a>
+
+                <!-- Desktop Nav Options -->
+                <nav class="hidden md:flex items-center gap-6 font-semibold text-sm tracking-wide">
+                    <a href="#about" class="text-gray-300 hover:text-brand-magenta transition-colors">About Us</a>
+                    <a href="#leagues" class="text-gray-300 hover:text-brand-magenta transition-colors">HRL Leagues</a>
+                    <a href="#highlights" class="text-gray-300 hover:text-brand-magenta transition-colors">Org Highlights</a>
+                    <a href="#media" class="text-gray-300 hover:text-brand-magenta transition-colors">Socials</a>
+                    <a href="javascript:void(0)" onclick="openModal('reqModal')" class="text-gray-300 hover:text-brand-magenta transition-colors">Requirements</a>
+                    <a href="javascript:void(0)" onclick="openModal('faqModal')" class="text-gray-300 hover:text-brand-magenta transition-colors">FAQ / Info</a>
+                    <a href="https://discord.gg/tK82H9Wj" target="_blank" rel="noopener noreferrer" class="bg-brand-magenta/10 border border-brand-magenta text-brand-magenta px-4 py-2 rounded-lg hover:bg-brand-magenta hover:text-white transition-all duration-300 shadow-sm">
+                        Join Discord
+                    </a>
+                    <button onclick="openModal('tryoutsModal')" class="bg-brand-magenta text-white px-5 py-2 rounded-lg font-bold uppercase tracking-wider text-xs magenta-glow hover:bg-opacity-90 transition-all transform hover:-translate-y-0.5">
+                        Apply Now
+                    </button>
+                </nav>
+
+                <!-- Mobile Menu Toggle Button -->
+                <button onclick="toggleMobileMenu()" class="md:hidden text-gray-300 hover:text-white p-2">
+                    <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Dropdown Navigation -->
+        <div id="mobileMenu" class="hidden md:hidden bg-brand-card border-b border-brand-border px-6 py-4 flex flex-col gap-4 text-center">
+            <a href="#about" onclick="toggleMobileMenu()" class="text-gray-300 hover:text-brand-magenta py-1">About Us</a>
+            <a href="#leagues" onclick="toggleMobileMenu()" class="text-gray-300 hover:text-brand-magenta py-1">HRL Leagues</a>
+            <a href="#highlights" onclick="toggleMobileMenu()" class="text-gray-300 hover:text-brand-magenta py-1">Org Highlights</a>
+            <a href="#media" onclick="toggleMobileMenu()" class="text-gray-300 hover:text-brand-magenta py-1">Socials</a>
+            <button onclick="toggleMobileMenu(); openModal('reqModal')" class="text-gray-300 hover:text-brand-magenta py-1">Requirements</button>
+            <button onclick="toggleMobileMenu(); openModal('faqModal')" class="text-gray-300 hover:text-brand-magenta py-1">FAQ / Info</button>
+            <a href="https://discord.gg/tK82H9Wj" target="_blank" rel="noopener noreferrer" class="bg-brand-magenta/10 border border-brand-magenta text-brand-magenta py-2 rounded-lg">Join Discord</a>
+            <button onclick="toggleMobileMenu(); openModal('tryoutsModal')" class="bg-brand-magenta text-white py-2 rounded-lg font-bold uppercase tracking-wider text-sm magenta-glow">Apply Now</button>
+        </div>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section class="relative py-24 md:py-32 overflow-hidden flex items-center justify-center">
+        <div class="absolute inset-0 bg-radial-at-c from-brand-magenta/10 via-transparent to-transparent opacity-50 pointer-events-none"></div>
+        <div class="max-w-5xl mx-auto px-4 text-center relative z-10">
+            <!-- Frameless Clean Hero Logo Display -->
+            <div class="mb-8 flex justify-center">
+                <img src="https://shared1.ad-lister.co.uk/UserImages/db655523-361b-4233-aa4d-1b375844f4c6/Img/clearance/Finley-URL_1.jpg" 
+                     alt="Veyr Esports Emblem" 
+                     class="h-32 md:h-44 w-auto clean-logo">
+            </div>
+
+            <h1 class="font-display text-5xl md:text-7xl font-extrabold uppercase tracking-wider text-white mb-4">
+                Dominate The <span class="text-brand-magenta text-glow">Arena</span>
+            </h1>
+            <p class="text-gray-400 text-lg md:text-xl max-w-2xl mx-auto font-light leading-relaxed mb-8">
+                Veyr Esports is a competitive Rocket League organization pushing the standards of grassroots excellence across European & North American divisions.
+            </p>
+            <div class="flex flex-col sm:flex-row justify-center items-center gap-4">
+                <a href="https://discord.gg/tK82H9Wj" target="_blank" rel="noopener noreferrer" class="w-full sm:w-auto bg-brand-magenta text-white px-8 py-3.5 rounded-lg font-bold uppercase tracking-wider text-sm magenta-glow hover:bg-opacity-90 transition-all transform hover:-translate-y-0.5">
+                    Join Our Discord
+                </a>
+                <a href="#highlights" class="w-full sm:w-auto border border-brand-border bg-brand-card hover:border-brand-magenta text-gray-200 px-8 py-3.5 rounded-lg font-bold uppercase tracking-wider text-sm transition-all">
+                    Org Highlights
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ABOUT US SECTION -->
+    <section id="about" class="py-20 border-y border-brand-border/40 bg-black/40">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12 max-w-3xl mx-auto">
+                <h2 class="font-display text-3xl md:text-5xl font-extrabold uppercase tracking-wider text-white mb-4">
+                    About <span class="text-brand-magenta">Us</span>
+                </h2>
+                <p class="text-gray-300 text-base md:text-lg leading-relaxed font-light">
+                    Veyr Esports is a fast growing team built on competitive drive and a connected community. We bring players together to improve, compete, and support each other. Our goal is a welcoming, active, and team-focused space where everyone can grind, enjoy the game, and be part of something on the rise.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center mt-12">
+                <div class="p-6 rounded-xl bg-brand-card/60 border border-brand-border">
+                    <div class="font-display text-4xl font-extrabold text-brand-magenta">1.3K+</div>
+                    <div class="text-gray-400 text-xs font-semibold uppercase tracking-widest mt-1">League Members</div>
+                </div>
+                <div class="p-6 rounded-xl bg-brand-card/60 border border-brand-border">
+                    <div class="font-display text-4xl font-extrabold text-brand-magenta">2</div>
+                    <div class="text-gray-400 text-xs font-semibold uppercase tracking-widest mt-1">HRL Competitions</div>
+                </div>
+                <div class="p-6 rounded-xl bg-brand-card/60 border border-brand-border">
+                    <div class="font-display text-4xl font-extrabold text-brand-magenta">8</div>
+                    <div class="text-gray-400 text-xs font-semibold uppercase tracking-widest mt-1">Active Rosters</div>
+                </div>
+                <div class="p-6 rounded-xl bg-brand-card/60 border border-brand-border">
+                    <div class="font-display text-4xl font-extrabold text-brand-magenta">24/7</div>
+                    <div class="text-gray-400 text-xs font-semibold uppercase tracking-widest mt-1">Active Community</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- HRL LEAGUES SECTION -->
+    <section id="leagues" class="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+            <h2 class="font-display text-3xl md:text-4xl font-extrabold uppercase tracking-wider text-white">
+                Official <span class="text-brand-magenta">HRL Leagues</span>
+            </h2>
+            <p class="text-gray-400 text-sm mt-2">Competing & hosting community tournaments across 3v3 and 2v2 modes</p>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-8">
+            <!-- HRL 3v3 -->
+            <div class="bg-brand-card border border-brand-border hover:border-brand-magenta/60 p-8 rounded-2xl transition-all duration-300 flex flex-col justify-between group">
+                <div>
+                    <div class="flex justify-between items-start mb-4">
+                        <h3 class="font-display text-2xl font-bold text-white group-hover:text-brand-magenta transition-colors">HRL 3v3 League</h3>
+                        <span class="bg-brand-magenta/10 text-brand-magenta text-xs px-3 py-1 rounded-full border border-brand-magenta/30">~800 Members</span>
+                    </div>
+                    <p class="text-gray-400 text-sm mb-6 leading-relaxed">
+                        Our flagship tournament circuit featuring structured seasons, playoffs, and high-intensity match coverage for competitive trios.
+                    </p>
+                </div>
+                <div class="flex items-center justify-between pt-4 border-t border-brand-border/60">
+                    <span class="text-xs text-gray-500 font-semibold uppercase tracking-wider">First Created League</span>
+                    <a href="https://discord.gg/hrl-league" target="_blank" rel="noopener noreferrer" class="text-brand-magenta font-semibold text-sm hover:underline flex items-center gap-1">
+                        Join 3v3 Discord &rarr;
+                    </a>
+                </div>
+            </div>
+
+            <!-- HRL 2v2 -->
+            <div class="bg-brand-card border border-brand-border hover:border-brand-magenta/60 p-8 rounded-2xl transition-all duration-300 flex flex-col justify-between group">
+                <div>
+                    <div class="flex justify-between items-start mb-4">
+                        <h3 class="font-display text-2xl font-bold text-white group-hover:text-brand-magenta transition-colors">HRL 2v2 League</h3>
+                        <span class="bg-brand-magenta/10 text-brand-magenta text-xs px-3 py-1 rounded-full border border-brand-magenta/30">~500 Members</span>
+                    </div>
+                    <p class="text-gray-400 text-sm mb-6 leading-relaxed">
+                        The newest expansion branch focused on fast-paced 2v2 duos, regional brackets, and weekly showcase matches.
+                    </p>
+                </div>
+                <div class="flex items-center justify-between pt-4 border-t border-brand-border/60">
+                    <span class="text-xs text-gray-500 font-semibold uppercase tracking-wider">Newest League</span>
+                    <a href="https://discord.gg/tZBjg55ZC" target="_blank" rel="noopener noreferrer" class="text-brand-magenta font-semibold text-sm hover:underline flex items-center gap-1">
+                        Join 2v2 Discord &rarr;
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- COMMUNITY & PERFORMANCE HIGHLIGHTS SECTION -->
+    <section id="highlights" class="py-20 bg-black/40 border-y border-brand-border/40">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="font-display text-3xl md:text-5xl font-extrabold uppercase tracking-wider text-white">
+                    Community <span class="text-brand-magenta">Highlights</span>
+                </h2>
+                <p class="text-gray-400 text-sm mt-2 max-w-xl mx-auto">
+                    What makes Veyr Esports the ultimate home for competitive players and content creators.
+                </p>
+            </div>
+
+            <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Fact 1 -->
+                <div class="bg-brand-card border border-brand-border p-6 rounded-xl hover:border-brand-magenta transition-all duration-300">
+                    <div class="w-12 h-12 bg-brand-magenta/10 rounded-lg flex items-center justify-center text-brand-magenta mb-4">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>
+                    </div>
+                    <h3 class="font-display text-xl font-bold text-white mb-2">Win Rates Slowly Increasing</h3>
+                    <p class="text-gray-400 text-xs leading-relaxed">Our teams are constantly improving, grinding scrims, and pushing higher in tournament brackets season after season.</p>
+                </div>
+
+                <!-- Fact 2 -->
+                <div class="bg-brand-card border border-brand-border p-6 rounded-xl hover:border-brand-magenta transition-all duration-300">
+                    <div class="w-12 h-12 bg-brand-magenta/10 rounded-lg flex items-center justify-center text-brand-magenta mb-4">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+                    </div>
+                    <h3 class="font-display text-xl font-bold text-white mb-2">Kind, Helpful Staff Management</h3>
+                    <p class="text-gray-400 text-xs leading-relaxed">Our management team is active, friendly, and always available to assist players, handle match scheduling, and support your growth.</p>
+                </div>
+
+                <!-- Fact 3 -->
+                <div class="bg-brand-card border border-brand-border p-6 rounded-xl hover:border-brand-magenta transition-all duration-300">
+                    <div class="w-12 h-12 bg-brand-magenta/10 rounded-lg flex items-center justify-center text-brand-magenta mb-4">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+                    </div>
+                    <h3 class="font-display text-xl font-bold text-white mb-2">Creators & Clip Hitters Welcomed</h3>
+                    <p class="text-gray-400 text-xs leading-relaxed">Whether you hit crazy freestyle mechanics or stream your gameplay, we feature top clips across our official social channels.</p>
+                </div>
+
+                <!-- Fact 4 -->
+                <div class="bg-brand-card border border-brand-border p-6 rounded-xl hover:border-brand-magenta transition-all duration-300">
+                    <div class="w-12 h-12 bg-brand-magenta/10 rounded-lg flex items-center justify-center text-brand-magenta mb-4">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+                    </div>
+                    <h3 class="font-display text-xl font-bold text-white mb-2">Any Rank Is Needed</h3>
+                    <p class="text-gray-400 text-xs leading-relaxed">Doesn’t matter for what rank you are, we need you. We offer multiple division tiers so everyone can compete and belong.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SOCIALS & MEDIA SECTION -->
+    <section id="media" class="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+            <h2 class="font-display text-3xl md:text-4xl font-extrabold uppercase tracking-wider text-white">
+                Connect With <span class="text-brand-magenta">Veyr</span>
+            </h2>
+            <p class="text-gray-400 text-sm mt-2">Follow our content channels and official team portals</p>
+        </div>
+
+        <div class="grid sm:grid-cols-3 gap-6 max-w-4xl mx-auto">
+            <!-- Discord Portal -->
+            <a href="https://discord.gg/tK82H9Wj" target="_blank" rel="noopener noreferrer" class="bg-brand-card border border-brand-border hover:border-brand-magenta p-6 rounded-2xl flex items-center gap-4 transition-all duration-300 group">
+                <div class="w-12 h-12 bg-[#5865F2]/10 rounded-xl flex items-center justify-center text-[#5865F2] group-hover:bg-[#5865F2] group-hover:text-white transition-all shrink-0">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994.021-.041.001-.09-.041-.106a13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.061 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.028zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg>
+                </div>
+                <div>
+                    <div class="font-display text-base font-bold text-white group-hover:text-brand-magenta transition-colors">Official Discord</div>
+                    <div class="text-[11px] text-gray-400">Join tryouts & community</div>
+                </div>
+            </a>
+
+            <!-- TikTok Portal -->
+            <a href="https://www.tiktok.com/@veyr.esports?_r=1&_t=ZN-9BIL2QM3Ztn" target="_blank" rel="noopener noreferrer" class="bg-brand-card border border-brand-border hover:border-brand-magenta p-6 rounded-2xl flex items-center gap-4 transition-all duration-300 group">
+                <div class="w-12 h-12 bg-brand-magenta/10 rounded-xl flex items-center justify-center text-brand-magenta group-hover:bg-brand-magenta group-hover:text-white transition-all shrink-0">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64c.29 0 .56.04.82.12V9.4a6.33 6.33 0 0 0-1-.08A6.34 6.34 0 0 0 3 15.66a6.34 6.34 0 0 0 10.86 4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1.04-.12z"/></svg>
+                </div>
+                <div>
+                    <div class="font-display text-base font-bold text-white group-hover:text-brand-magenta transition-colors">TikTok Clips</div>
+                    <div class="text-[11px] text-gray-400">@veyr.esports highlights</div>
+                </div>
+            </a>
+
+            <!-- Linktree Portal -->
+            <a href="https://linktr.ee/Veyr.esports" target="_blank" rel="noopener noreferrer" class="bg-brand-card border border-brand-border hover:border-brand-magenta p-6 rounded-2xl flex items-center gap-4 transition-all duration-300 group">
+                <div class="w-12 h-12 bg-emerald-500/10 rounded-xl flex items-center justify-center text-emerald-400 group-hover:bg-emerald-500 group-hover:text-white transition-all shrink-0">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M13.736 5.853h4.005l-2.417 2.413 2.599 2.598h-4.187l-1.736-1.734v3.133h-1.999V9.13l-1.735 1.734H4.079l2.599-2.598-2.417-2.413h4.005L10.267 7.85v-3.77H6.262V2.081h7.476v1.999h-4.005v3.77l1.999-1.997zM10.267 14.532v7.387h3.468v-7.387h-3.468z"/></svg>
+                </div>
+                <div>
+                    <div class="font-display text-base font-bold text-white group-hover:text-brand-magenta transition-colors">Official Linktree</div>
+                    <div class="text-[11px] text-gray-400">All Veyr links in one place</div>
+                </div>
+            </a>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="border-t border-brand-border/60 bg-black py-8">
+        <div class="max-w-7xl mx-auto px-4 text-center text-xs text-gray-500 space-y-2">
+            <p>&copy; 2026 Veyr Esports. All rights reserved. Rocket League is a registered trademark of Psyonix LLC.</p>
+            <p><a href="https://linktr.ee/Veyr.esports" target="_blank" rel="noopener noreferrer" class="text-brand-magenta hover:underline font-semibold">linktr.ee/Veyr.esports</a></p>
+        </div>
+    </footer>
+
+    <!-- MODAL 1: TRYOUTS & APPLY NOW -->
+    <div id="tryoutsModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-brand-card border border-brand-border w-full max-w-md rounded-2xl p-6 relative">
+            <button onclick="closeModal('tryoutsModal')" class="absolute top-4 right-4 text-gray-400 hover:text-white text-xl font-bold">&times;</button>
+            
+            <div class="text-center mb-6">
+                <h3 class="font-display text-2xl font-extrabold text-white uppercase">Veyr Esports <span class="text-brand-magenta">Tryouts</span></h3>
+                <p class="text-xs text-gray-400 mt-1">Follow the official steps below to apply</p>
+            </div>
+
+            <div class="space-y-4 mb-6">
+                <div class="bg-black/40 border border-brand-border p-4 rounded-xl text-center">
+                    <p class="text-sm font-semibold text-gray-200">
+                        For Tryouts, please join our Discord Server and Create a Ticket.
+                    </p>
+                </div>
+
+                <div class="text-xs text-gray-400 space-y-2 pl-2">
+                    <div class="flex items-center gap-2">
+                        <span class="w-5 h-5 bg-brand-magenta/20 text-brand-magenta rounded-full flex items-center justify-center font-bold text-[10px]">1</span>
+                        <span>Click the button below to join the Discord.</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <span class="w-5 h-5 bg-brand-magenta/20 text-brand-magenta rounded-full flex items-center justify-center font-bold text-[10px]">2</span>
+                        <span>Navigate to the <strong>#tickets</strong> or tryouts channel.</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <span class="w-5 h-5 bg-brand-magenta/20 text-brand-magenta rounded-full flex items-center justify-center font-bold text-[10px]">3</span>
+                        <span>Open a <strong>"Tryouts Ticket"</strong> for staff review.</span>
+                    </div>
+                </div>
+
+                <div class="p-3 bg-brand-magenta/10 border border-brand-magenta/30 rounded-lg text-[11px] text-gray-300 leading-relaxed">
+                    <strong>Note:</strong> Must have Discord. A free spot in your selected Roster is not always available, so you may have to wait in the Academy until a spot opens up.
+                </div>
+            </div>
+
+            <a href="https://discord.gg/tK82H9Wj" target="_blank" rel="noopener noreferrer" class="block w-full text-center bg-brand-magenta text-white py-3 rounded-xl font-bold uppercase tracking-wider text-xs magenta-glow hover:bg-opacity-90 transition-all">
+                Join Discord & Create Ticket
+            </a>
+        </div>
+    </div>
+
+    <!-- MODAL 2: REQUIREMENTS -->
+    <div id="reqModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-brand-card border border-brand-border w-full max-w-md rounded-2xl p-6 relative">
+            <button onclick="closeModal('reqModal')" class="absolute top-4 right-4 text-gray-400 hover:text-white text-xl font-bold">&times;</button>
+            <h3 class="font-display text-2xl font-extrabold text-white uppercase mb-4">Player <span class="text-brand-magenta">Requirements</span></h3>
+            <ul class="space-y-3 text-xs text-gray-300">
+                <li class="flex items-start gap-2">
+                    <span class="text-brand-magenta font-bold">&bull;</span>
+                    <span>Active Discord account with working microphone.</span>
+                </li>
+                <li class="flex items-start gap-2">
+                    <span class="text-brand-magenta font-bold">&bull;</span>
+                    <span>Consistent availability for scheduled scrims and HRL league matches.</span>
+                </li>
+                <li class="flex items-start gap-2">
+                    <span class="text-brand-magenta font-bold">&bull;</span>
+                    <span>Respectful attitude toward teammates, opponents, and staff.</span>
+                </li>
+                <li class="flex items-start gap-2">
+                    <span class="text-brand-magenta font-bold">&bull;</span>
+                    <span>Willingness to receive constructive VOD review feedback.</span>
+                </li>
+            </ul>
+            <button onclick="closeModal('reqModal')" class="w-full mt-6 bg-brand-border text-gray-300 py-2.5 rounded-lg text-xs font-bold uppercase hover:bg-gray-800">Close</button>
+        </div>
+    </div>
+
+    <!-- MODAL 3: FAQ -->
+    <div id="faqModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-brand-card border border-brand-border w-full max-w-md rounded-2xl p-6 relative">
+            <button onclick="closeModal('faqModal')" class="absolute top-4 right-4 text-gray-400 hover:text-white text-xl font-bold">&times;</button>
+            <h3 class="font-display text-2xl font-extrabold text-white uppercase mb-4">Frequently Asked <span class="text-brand-magenta">Questions</span></h3>
+            <div class="space-y-4 text-xs">
+                <div>
+                    <div class="font-bold text-white mb-1">How do I try out?</div>
+                    <div class="text-gray-400">Join our Discord server using the button above, go to the tickets channel, and open a Tryouts Ticket.</div>
+                </div>
+                <div>
+                    <div class="font-bold text-white mb-1">What if a main team spot is full?</div>
+                    <div class="text-gray-400">You may be placed in the Academy division until an active spot opens on Elite or Major.</div>
+                </div>
+                <div>
+                    <div class="font-bold text-white mb-1">What regions do you play?</div>
+                    <div class="text-gray-400">We primarily compete in EU and NA Rocket League events and HRL leagues.</div>
+                </div>
+            </div>
+            <button onclick="closeModal('faqModal')" class="w-full mt-6 bg-brand-border text-gray-300 py-2.5 rounded-lg text-xs font-bold uppercase hover:bg-gray-800">Close</button>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT & SECURITY LOGIC -->
+    <script>
+        let lastActionTime = 0;
+
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            menu.classList.toggle('hidden');
+        }
+
+        function openModal(modalId) {
+            const now = Date.now();
+            if (now - lastActionTime < 250) return; // Client-side rate limiting
+            lastActionTime = now;
+
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.classList.remove('hidden');
+            }
+        }
+
+        function closeModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.classList.add('hidden');
+            }
+        }
+
+        function acceptCookies() {
+            localStorage.setItem('veyr_cookie_consent', 'accepted');
+            document.getElementById('cookieBanner').classList.add('hidden');
+        }
+
+        // Initialize Cookie Consent check
+        window.addEventListener('DOMContentLoaded', () => {
+            if (!localStorage.getItem('veyr_cookie_consent')) {
+                document.getElementById('cookieBanner').classList.remove('hidden');
+            }
+        });
+
+        // Close modal on outer click or Escape key
+        window.onclick = function(event) {
+            if (event.target.classList.contains('backdrop-blur-sm')) {
+                event.target.classList.add('hidden');
+            }
+        };
+
+        window.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                ['tryoutsModal', 'reqModal', 'faqModal'].forEach(closeModal);
+            }
+        });
+    </script>
+</body>
+</html>
